@@ -1,0 +1,124 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+    font-size: 1.2vw;
+    background: linear-gradient(170deg, #ffcba4, #a8d8ea);
+    
+    box-sizing: border-box;
+    min-height: 100vh;
+    justify-content: flex-start;
+    padding-top: 20vh;
+}
+
+h1 {
+    font-size: 5vw;
+    margin-bottom: 5vh;
+
+    text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+#input-div {
+    margin-bottom: 16px;
+    display: flex;
+    gap: 8px;
+    width: 50vw;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px 16px;
+    align-items: stretch;
+    background-color:white;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+#todo-input {
+    flex: 1;
+    padding: 8px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#todo-list {
+    width: 50vw;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 20px;
+    background-color: white;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+input:focus {
+    outline: none;
+    border: 1px solid #14b8a6;
+}
+
+div[id^="todo-item"] {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 3px;
+}
+
+div[id^="todo-item"] span {
+    flex: 1;
+    padding-left: 8px;
+    cursor: pointer;
+}
+
+div[id^="todo-item"] input[type="text"] {
+    flex: 1;
+    padding-left: 8px;
+    font-size: 1em;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    align-self: stretch;
+    margin-right: 8px;
+}
+
+button {
+    background-color: #14b8a6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.deleteBtn {
+    visibility: hidden;
+    background-color: #f87171;
+}
+
+div[id^="todo-item"]:hover .deleteBtn {
+    visibility: visible;
+}
+
+.done span {
+    text-decoration: line-through;
+    opacity: 0.4;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    width: 1.2em;
+    height: 1.2em;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #14b8a6;
+    border-color: #14b8a6;
+}
