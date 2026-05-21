@@ -3,6 +3,16 @@ const todoList = document.querySelector("#todo-list");
 
 let todos = [];
 
+// XSS 방어 . 속성 손상 방지 . 배열에는 원본 그대로 저장하되 Display시에 개입
+function escapeHtml(str) {
+    return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
 function todoInit() {
     todos = JSON.parse(localStorage.getItem("todo")) || [];
     todoDisplay();
@@ -41,7 +51,7 @@ function todoDisplay() {
         html += `
             <div id="todo-item-${i}" class="${todos[i].done ? "done" : ""}"> 
                 <input type="checkbox" ${todos[i].done ? "checked" : ""} onclick="toggleDone(${i})">
-                <span id="todo-text-${i}" onclick="editTodo(${i})">${todos[i].text}</span>
+                <span id="todo-text-${i}" onclick="editTodo(${i})">${escapeHtml(todos[i].text)}</span>
                 <button class="deleteBtn" onclick="deleteTodo(${i})">X</button>
             </div>
         `;
@@ -63,7 +73,7 @@ function editTodo(n) {
     const span = document.querySelector(`#todo-text-${n}`);
 
     span.outerHTML = `
-        <input id="todo-text-${n}" type="text" value="${todos[n].text}" onblur="saveTodo(${n}, this.value)" onkeydown="if(event.key==='Enter') this.blur()">
+        <input id="todo-text-${n}" type="text" value="${escapeHtml(todos[n].text)}" onblur="saveTodo(${n}, this.value)" onkeydown="if(event.key==='Enter') this.blur()">
     `;
 }
 
@@ -90,4 +100,3 @@ function deleteTodo(n) {
 }
 
 todoInit();
-
