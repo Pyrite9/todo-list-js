@@ -70,9 +70,9 @@ Click the checkbox to mark a task as complete. A strikethrough and gray style wi
 
 ### Edit | 수정
 
-Click on a task text to turn it into an editable input box. Edit the content and press **Enter** to save the changes.
+Click on a task text to turn it into an editable input box. Edit the content, then press **Enter** or click outside the input to save.
 
-텍스트 클릭 시 입력창으로 변경. 내용 수정 후 **Enter** 키 입력으로 저장.
+텍스트 클릭 시 입력창으로 변경. 내용 수정 후 **Enter** 키 또는 입력창 외부 클릭으로 저장.
 
 <div align="center">
 
@@ -200,7 +200,8 @@ function saveTodo(n, val) {
 
 **핵심 포인트**
 - `outerHTML` 교체로 DOM 노드를 통째로 변경
-- `Enter` 키 입력 시 `blur()` 호출 → `onblur` 이벤트로 저장 로직 자연스럽게 연결
+- 저장 트리거는 `onblur` 단일 이벤트. `Enter` 키는 `blur()`를 호출해 동일 경로로 수렴
+- 포커스 이탈(외부 클릭)도 자동 저장됨
 - 공백 저장 시도는 무시하고 원래 텍스트로 복원
 
 ---
