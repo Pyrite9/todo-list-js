@@ -157,7 +157,7 @@ function todoDisplay() {
         html += `
             <div id="todo-item-${i}" class="${todos[i].done ? "done" : ""}"> 
                 <input type="checkbox" ${todos[i].done ? "checked" : ""} onclick="toggleDone(${i})">
-                <span id="todo-text-${i}" onclick="editTodo(${i})">${todos[i].text}</span>
+                <span id="todo-text-${i}" onclick="editTodo(${i})">${escapeHtml(todos[i].text)}</span>
                 <button class="deleteBtn" onclick="deleteTodo(${i})">X</button>
             </div>
         `;
@@ -170,6 +170,33 @@ function todoDisplay() {
 - **전체 재렌더링 방식**: 변경이 발생할 때마다 리스트 전체를 새로 렌더링. 인덱스 기반 접근이 항상 일관되게 동작
 - **빈 상태 처리**: 배열이 비어 있을 때 안내 메시지 표시
 - **조건부 클래스**: `done` 상태에 따라 `class="done"` 부여 → CSS에서 취소선 처리
+- **사용자 입력은 `escapeHtml()` 통과** — 자세한 내용은 Safe Rendering 섹션
+
+---
+
+### Safe Rendering | 안전한 렌더링
+
+사용자 입력을 HTML로 변환할 때 `escapeHtml()` 함수로 한 번 거름. XSS 방어 및 따옴표/태그 입력 시 발생하는 속성 손상을 방지.
+
+```js
+function escapeHtml(str) {
+    return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+// 적용: todoDisplay()의 span, editTodo()의 input value
+html += `<span ...>${escapeHtml(todos[i].text)}</span>`;
+```
+
+**핵심 포인트**
+- **원칙: 저장은 원본, 출력만 가공** — `todos` 배열에는 항상 사용자가 입력한 그대로 저장
+- **변환은 HTML 생성 시점에만** — `todoDisplay()` span과 `editTodo()` input value 두 곳에서 통과
+- `<div>` 같은 태그 입력 → 화면에서 사라지는 문제 해결
+- 따옴표 포함 입력 → input `value` 속성 깨지는 문제 해결
 
 ---
 
@@ -181,7 +208,7 @@ function todoDisplay() {
 function editTodo(n) {
     const span = document.querySelector(`#todo-text-${n}`);
     span.outerHTML = `
-        <input id="todo-text-${n}" type="text" value="${todos[n].text}" 
+        <input id="todo-text-${n}" type="text" value="${escapeHtml(todos[n].text)}" 
                onblur="saveTodo(${n}, this.value)" 
                onkeydown="if(event.key==='Enter') this.blur()">
     `;
@@ -203,6 +230,7 @@ function saveTodo(n, val) {
 - 저장 트리거는 `onblur` 단일 이벤트. `Enter` 키는 `blur()`를 호출해 동일 경로로 수렴
 - 포커스 이탈(외부 클릭)도 자동 저장됨
 - 공백 저장 시도는 무시하고 원래 텍스트로 복원
+- **`value` 속성 안의 사용자 입력도 `escapeHtml()` 통과** — 따옴표 입력 시 속성이 깨지는 문제 방지
 
 ---
 
@@ -247,7 +275,8 @@ User Action  →  todos 배열 수정  →  LocalStorage 저장  →  todoDispla
 ### CSS
 - **Flexbox** layout
 - **CSS Variables** with relative units (`vw`, `vh`, `em`)
-- **Pseudo-classes** — `:hover`, `:focus`, `:checked`
+- **Pseudo-classes** — `:hover`, `:focus`, `:checked`, `:active`
+- **CSS Transitions** — smooth hover & fade effects (`transform`, `opacity`, `box-shadow`)
 - **Google Fonts** — Inter, Noto Sans KR
 
 ---
