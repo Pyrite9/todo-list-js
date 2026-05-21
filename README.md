@@ -16,7 +16,7 @@ https://pyrite9.github.io/todo-list-js
 >
 > 입력창에 텍스트를 입력하고 Enter 키를 누르거나 Add 버튼을 클릭하면 task가 추가됩니다.
 
-> Complete (CheckBox)
+> Complete (CheckBox) | 완료
 >
 > ![Complete](https://raw.githubusercontent.com/Pyrite9/todo-list-js/main/readme-image/Complete.gif)
 >
@@ -24,7 +24,7 @@ https://pyrite9.github.io/todo-list-js
 >
 > 체크박스를 클릭하면 task가 완료 처리되며, 취소선과 회색 스타일이 적용됩니다.
 
-> Edit
+> Edit | 수정
 >
 > ![Edit](https://raw.githubusercontent.com/Pyrite9/todo-list-js/main/readme-image/Edit.gif)
 >
@@ -32,7 +32,7 @@ https://pyrite9.github.io/todo-list-js
 >
 > 텍스트를 클릭하면 입력창으로 변경됩니다. 내용을 수정하고 Enter 키를 누르면 저장됩니다.
 
-> Delete
+> Delete | 삭제
 >
 > ![Delete](https://raw.githubusercontent.com/Pyrite9/todo-list-js/main/readme-image/Delete.gif)
 >
